@@ -1,0 +1,6 @@
+<resources>
+    <string name="day">Day: %d</string>
+    <string name="hour">Hour: %d</string>
+    <string name="second">Second: %d</string>
+    <string name="minutes">Second: %d</string>
+</resources>
