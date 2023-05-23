@@ -1,4 +1,4 @@
-package com.bahadir.overlayservice.ui.activity
+package com.bahadir.services.ui.activity
 
 import com.bahadir.core.base.State
 import com.bahadir.core.domain.model.UsageStateUI

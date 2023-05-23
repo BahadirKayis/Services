@@ -1,4 +1,4 @@
-package com.bahadir.core.infrastructure
+package com.bahadir.service.infrastructure
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -13,9 +13,10 @@ import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
 import com.bahadir.core.domain.model.MusicUI
-import com.bahadir.core.domain.provider.NotificationControl
 import com.bahadir.service.R
 import com.bahadir.service.enum.NotificationAction
+import com.bahadir.service.foreground.MusicPlayer
+import com.bahadir.service.provider.NotificationControl
 import javax.inject.Inject
 
 class NotificationControlImpl @Inject constructor(val context: Context, val service: Service) :

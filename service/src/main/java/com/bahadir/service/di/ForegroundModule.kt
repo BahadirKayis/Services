@@ -1,12 +1,12 @@
 package com.bahadir.service.di
 
 import android.content.Context
-import com.bahadir.core.domain.provider.MusicControl
-import com.bahadir.core.domain.provider.NotificationControl
-import com.bahadir.core.infrastructure.MusicControlImpl
-import com.bahadir.core.infrastructure.NotificationControlImpl
-import com.bahadir.service.watcher.ForegroundAppWatcher
-import com.bahadir.service.watcher.ForegroundAppWatcherImpl
+import com.bahadir.service.infrastructure.MusicControlImpl
+import com.bahadir.service.infrastructure.NotificationControlImpl
+import com.bahadir.service.provider.MusicControl
+import com.bahadir.service.provider.NotificationControl
+import com.bahadir.service.provider.ForegroundAppWatcher
+import com.bahadir.service.infrastructure.ForegroundAppWatcherImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

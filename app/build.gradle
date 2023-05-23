@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace 'com.bahadir.overlayservice'
+    namespace 'com.bahadir.services'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.bahadir.overlayservice"
+        applicationId "com.bahadir.services"
         minSdk 24
         targetSdk 33
         versionCode 1

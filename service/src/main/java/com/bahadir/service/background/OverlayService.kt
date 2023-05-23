@@ -12,7 +12,7 @@ import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
 import com.bahadir.service.R
 import com.bahadir.service.databinding.OtherAppDesignBinding
-import com.bahadir.service.watcher.ForegroundAppWatcher
+import com.bahadir.service.provider.ForegroundAppWatcher
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

@@ -1,7 +1,8 @@
-package com.bahadir.service.watcher
+package com.bahadir.service.infrastructure
 
 import android.app.usage.UsageStatsManager
 import android.content.Context
+import com.bahadir.service.provider.ForegroundAppWatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

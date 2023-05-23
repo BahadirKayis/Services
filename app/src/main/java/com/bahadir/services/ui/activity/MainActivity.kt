@@ -1,4 +1,4 @@
-package com.bahadir.overlayservice.ui.activity
+package com.bahadir.services.ui.activity
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -18,9 +18,9 @@ import com.bahadir.core.common.showCustomSnackBar
 import com.bahadir.core.common.visible
 import com.bahadir.core.delegation.viewBinding
 import com.bahadir.core.domain.provider.PermissionProvider
-import com.bahadir.overlayservice.R
-import com.bahadir.overlayservice.databinding.ActivityMainBinding
-import com.bahadir.overlayservice.ui.selectmusic.SelectMusicFragment
+import com.bahadir.services.R
+import com.bahadir.services.databinding.ActivityMainBinding
+import com.bahadir.services.ui.selectmusic.SelectMusicFragment
 import com.bahadir.service.background.OverlayService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay

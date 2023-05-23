@@ -1,4 +1,4 @@
-package com.bahadir.overlayservice.ui.activity
+package com.bahadir.services.ui.activity
 
 import com.bahadir.core.base.Effect
 

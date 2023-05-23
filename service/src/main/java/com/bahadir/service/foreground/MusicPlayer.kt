@@ -6,8 +6,8 @@ import android.content.Intent
 import android.os.IBinder
 import com.bahadir.core.common.parcelableList
 import com.bahadir.core.data.model.IntentServiceMusicList
-import com.bahadir.core.domain.provider.MusicControl
 import com.bahadir.service.enum.NotificationAction
+import com.bahadir.service.provider.MusicControl
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -40,16 +40,18 @@ class MusicPlayer : Service() {
                 }
 
                 NotificationAction.PREVIOUS -> {
-                    musicControl.changeSong(-1)
+
+                    startUpdateForeground(musicControl.changeSong(-1))
                 }
 
                 NotificationAction.EXIT -> {
                     musicControl.stopNotification()
+
                     stopSelf()
                 }
 
                 else -> {
-                    musicControl.musicStateUpdate(value)
+                    startUpdateForeground(musicControl.musicStateUpdate(value))
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.bahadir.service.watcher
+package com.bahadir.service.provider
 
 interface ForegroundAppWatcher {
     fun startWatching(packageName: (String) -> Unit)

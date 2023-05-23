@@ -1,10 +1,10 @@
-package com.bahadir.overlayservice.ui.activity
+package com.bahadir.services.ui.activity
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bahadir.core.domain.model.UsageStateUI
-import com.bahadir.overlayservice.databinding.ItemAppUsageTimeBinding
+import com.bahadir.services.databinding.ItemAppUsageTimeBinding
 
 class AppsUsageTimeAdapter(private val usageState: List<UsageStateUI>) :
     RecyclerView.Adapter<AppsUsageTimeAdapter.ViewHolder>() {

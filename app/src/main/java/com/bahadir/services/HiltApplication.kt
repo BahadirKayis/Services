@@ -1,4 +1,4 @@
-package com.bahadir.overlayservice
+package com.bahadir.services
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

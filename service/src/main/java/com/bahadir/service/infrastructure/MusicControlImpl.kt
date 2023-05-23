@@ -1,4 +1,4 @@
-package com.bahadir.core.infrastructure
+package com.bahadir.service.infrastructure
 
 import android.app.Notification
 import android.content.Context
@@ -6,9 +6,10 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.support.v4.media.session.MediaSessionCompat
 import com.bahadir.core.domain.model.MusicUI
-import com.bahadir.core.domain.provider.MusicControl
-import com.bahadir.core.domain.provider.NotificationControl
 import com.bahadir.service.enum.NotificationAction
+import com.bahadir.service.provider.MusicControl
+import com.bahadir.service.provider.NotificationControl
+
 
 class MusicControlImpl(
     private val context: Context, private val notification: NotificationControl
@@ -44,7 +45,7 @@ class MusicControlImpl(
         return startSong()
     }
 
-    override fun musicStateUpdate(state: NotificationAction) {
+    override fun musicStateUpdate(state: NotificationAction):Notification {
         val newState = when (state) {
             NotificationAction.PLAY -> {
                 mediaPlayer.pause()
@@ -60,7 +61,7 @@ class MusicControlImpl(
                 NotificationAction.PLAY
             }
         }
-        notification.showNotification(newState, songList[songPosition])
+       return notification.showNotification(newState, songList[songPosition])
     }
 
     override fun audioFocusChange() {

@@ -1,4 +1,4 @@
-package com.bahadir.overlayservice.ui.selectmusic
+package com.bahadir.services.ui.selectmusic
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,8 @@ import com.bahadir.core.common.collectIn
 import com.bahadir.core.data.model.IntentServiceMusicList
 import com.bahadir.core.delegation.viewBinding
 import com.bahadir.core.domain.model.MusicUI
-import com.bahadir.overlayservice.R
-import com.bahadir.overlayservice.databinding.FragmentSelectMusicBinding
+import com.bahadir.services.R
+import com.bahadir.services.databinding.FragmentSelectMusicBinding
 import com.bahadir.service.foreground.MusicPlayer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint

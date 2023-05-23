@@ -27,7 +27,7 @@ object DataStore {
 }
 
 object Media {
-    const val media = "implementation 'androidx.media:media:1.6.0'"
+    const val media = "androidx.media:media:1.6.0"
 }
 
 

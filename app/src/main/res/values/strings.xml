@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Overlay Service</string>
+    <string name="app_name">Services</string>
     <string name="start_background_service">Start Bg </string>
     <string name="start_foreground_service">Start Fg </string>
     <string name="stop_service">Stop Service</string>
