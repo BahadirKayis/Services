@@ -1,29 +1,46 @@
-package com.bahadir.service.foreground
+package com.bahadir.service.presentation.foreground
 
 import android.app.Notification
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.bahadir.core.common.ServiceName
 import com.bahadir.core.common.parcelableList
 import com.bahadir.core.data.model.IntentServiceMusicList
-import com.bahadir.service.enum.NotificationAction
-import com.bahadir.service.provider.MusicControl
+import com.bahadir.core.domain.usecase.SetServiceUseCase
+import com.bahadir.service.common.NotificationAction
+import com.bahadir.service.domain.provider.MusicControl
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 
 @AndroidEntryPoint
-class MusicPlayer : Service() {
+class MusicPlayerService : Service() {
     @Inject
-    lateinit var musicControl: MusicControl
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+    internal lateinit var musicControl: MusicControl
+
+    @Inject
+    lateinit var setServiceUseCase: SetServiceUseCase
+
+    @Inject
+    @Named("IO")
+    lateinit var coroutine: CoroutineScope
+
 
     override fun onDestroy() {
         super.onDestroy()
+        coroutine.launch {
+            setServiceUseCase(false, ServiceName.FOREGROUND)
+        }
         musicControl.stopNotification()
         stopSelf()
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -46,7 +63,6 @@ class MusicPlayer : Service() {
 
                 NotificationAction.EXIT -> {
                     musicControl.stopNotification()
-
                     stopSelf()
                 }
 
@@ -55,7 +71,7 @@ class MusicPlayer : Service() {
                 }
             }
         }
-        return START_NOT_STICKY
+        return START_STICKY
     }
 
     private fun startUpdateForeground(notification: Notification) {

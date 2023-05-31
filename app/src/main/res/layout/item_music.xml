@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/_ic_music"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:contentDescription="Music"
         android:src="@drawable/ic_music"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,37 +23,30 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="@dimen/_8dp"
-        android:fontFamily="@font/archivo_black"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/_ic_music"
-        app:layout_constraintEnd_toStartOf="@id/_ic_play"
+        app:layout_constraintEnd_toStartOf="@id/text_time"
         app:layout_constraintStart_toEndOf="@id/_ic_music"
         app:layout_constraintTop_toTopOf="@id/_ic_music" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-
+        android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_time" />
+        app:layout_constraintTop_toBottomOf="@id/_ic_music" />
 
     <TextView
         android:id="@+id/text_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/text_title"
-        app:layout_constraintTop_toBottomOf="@id/text_title"
-        tools:text="3:00" />
-
-    <ImageView
-        android:id="@+id/_ic_play"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:contentDescription="Play"
-        android:src="@drawable/ic_play"
+        android:layout_marginEnd="@dimen/_8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/_ic_music"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/_ic_music"
-        tools:ignore="HardcodedText" />
+        tools:text="3:00" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

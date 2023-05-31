@@ -2,7 +2,9 @@ package com.bahadir.core.di
 
 import android.content.Context
 import com.bahadir.core.domain.provider.PermissionProvider
+import com.bahadir.core.domain.provider.ResourceProvider
 import com.bahadir.core.infrastructure.PermissionProviderImpl
+import com.bahadir.core.infrastructure.ResourceProviderImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,4 +19,9 @@ object PermissionModule {
     @Singleton
     fun providePermissionManager(@ApplicationContext context: Context): PermissionProvider =
         PermissionProviderImpl(context)
+
+    @Provides
+    @Singleton
+    fun provideResource(@ApplicationContext context: Context): ResourceProvider =
+        ResourceProviderImpl(context)
 }

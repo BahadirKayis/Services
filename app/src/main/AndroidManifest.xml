@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- Background Service-->
+    <!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" />
-
-    <uses-permission
-        android:name="android.permission.PACKAGE_USAGE_STATS"
-        tools:ignore="ProtectedPermissions" />
-
+    <!--Foreground Service-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
 
     <application
         android:name=".HiltApplication"
@@ -41,15 +34,18 @@
         </activity>
         <receiver
             android:name="com.bahadir.broadcastreceiver.BootBroadcastReceiver"
+            android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.bahadir.service.background.OverlayService" />
+        <service android:name="com.bahadir.service.presentation.background.SensorService" />
         <service
-            android:name="com.bahadir.service.foreground.MusicPlayer"
+            android:name="com.bahadir.service.presentation.foreground.MusicPlayerService"
             android:foregroundServiceType="mediaPlayback" />
+        <service android:name="com.bahadir.service.presentation.bound.MessengerService" />
+        <service android:name="com.bahadir.service.presentation.bound.SoundService" />
     </application>
 </manifest>

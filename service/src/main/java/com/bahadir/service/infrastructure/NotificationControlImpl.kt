@@ -4,7 +4,6 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -12,15 +11,15 @@ import android.graphics.Color
 import android.os.Build
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
-import com.bahadir.core.domain.model.MusicUI
+import com.bahadir.core.data.model.MusicUI
 import com.bahadir.service.R
-import com.bahadir.service.enum.NotificationAction
-import com.bahadir.service.foreground.MusicPlayer
-import com.bahadir.service.provider.NotificationControl
-import javax.inject.Inject
+import com.bahadir.service.common.NotificationAction
+import com.bahadir.service.presentation.foreground.MusicPlayerService
+import com.bahadir.service.domain.provider.NotificationControl
 
-class NotificationControlImpl @Inject constructor(val context: Context, val service: Service) :
-    NotificationControl {
+internal class NotificationControlImpl (
+    val context: Context
+) : NotificationControl {
 
     override lateinit var mediaSession: MediaSessionCompat
 
@@ -80,7 +79,7 @@ class NotificationControlImpl @Inject constructor(val context: Context, val serv
         } else {
             PendingIntent.FLAG_UPDATE_CURRENT
         }
-        val intent = Intent(context, MusicPlayer::class.java).setAction(action.name)
+        val intent = Intent(context, MusicPlayerService::class.java).setAction(action.name)
         return PendingIntent.getService(context, 0, intent, flag)
     }
 

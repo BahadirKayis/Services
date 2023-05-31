@@ -1,11 +1,11 @@
-package com.bahadir.service.provider
+package com.bahadir.service.domain.provider
 
 import android.app.Notification
-import com.bahadir.core.domain.model.MusicUI
-import com.bahadir.service.enum.NotificationAction
+import com.bahadir.core.data.model.MusicUI
+import com.bahadir.service.common.NotificationAction
 
 
-interface MusicControl {
+internal interface MusicControl {
     var songList: List<MusicUI>
     var songPosition: Int
     fun startSong(): Notification

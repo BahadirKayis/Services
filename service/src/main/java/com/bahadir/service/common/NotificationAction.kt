@@ -1,9 +1,9 @@
-package com.bahadir.service.enum
+package com.bahadir.service.common
 
 import com.bahadir.service.R
 
 
-enum class NotificationAction {
+internal enum class NotificationAction {
     NEXT, PREVIOUS, PLAY, EXIT, PAUSE;
 
     operator fun invoke(): Int {

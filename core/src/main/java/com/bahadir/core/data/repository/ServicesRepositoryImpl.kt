@@ -3,42 +3,37 @@ package com.bahadir.core.data.repository
 import android.content.Context
 import android.provider.MediaStore
 import com.bahadir.core.common.Resource
+import com.bahadir.core.common.ServiceName
 import com.bahadir.core.common.formatDuration
-import com.bahadir.core.domain.model.MusicUI
-import com.bahadir.core.domain.model.UsageStateUI
-import com.bahadir.core.domain.repository.OverlayServiceRepository
+import com.bahadir.core.data.model.MusicUI
+import com.bahadir.core.domain.repository.ServicesRepository
 import com.bahadir.core.domain.source.DataStoreDataSource
-import com.bahadir.core.domain.source.UsageStateDataSource
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Singleton
 
 @Singleton
-class OverlayServiceRepositoryImpl(
+class ServicesRepositoryImpl(
     private val dataStore: DataStoreDataSource,
-    private val usageState: UsageStateDataSource,
     private val context: Context
-) : OverlayServiceRepository {
-    override suspend fun setServiceStatus(status: Boolean) {
-        dataStore.setServiceStatus(status)
-    }
-
-    override suspend fun getServiceStatus(): Boolean = dataStore.getServiceStatus()
+) : ServicesRepository {
+    override suspend fun setServiceStatus(status: Boolean, name: ServiceName) =
+        dataStore.setServiceStatus(status, name)
 
 
-    override suspend fun setServiceStartTime(startTime: Long) {
-        dataStore.setServiceStartTime(startTime)
-    }
+    override suspend fun getServiceStatus(name: ServiceName): Boolean =
+        dataStore.getServiceStatus(name)
 
-    override fun getUsageStatesTime(): Flow<Resource<List<UsageStateUI>>> = callbackFlow {
-        val startTime = dataStore.getServiceStartTime()
-        val data = usageState.getUsageStatesTime(startTime)
-        trySend(Resource.Success(data))
+    override fun getServiceStatusFlow(name: ServiceName): Flow<Boolean> = callbackFlow {
+        dataStore.getServiceStatusFlow(name).onEach { trySend(it) }.launchIn(this)
         awaitClose { channel.close() }
     }
 
-    override fun getMusicList(): Flow<Resource<List<MusicUI>>> = callbackFlow {
+    override fun getMusicList(): Flow<Resource<List<MusicUI>>> = flow {
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
             MediaStore.Audio.Media._ID,
@@ -66,8 +61,7 @@ class OverlayServiceRepositoryImpl(
                 musicList.add(MusicUI(id, name, artist, duration.formatDuration(), contentUri))
             }
 
-            trySend(Resource.Success(musicList))
-            awaitClose { channel.close() }
+            emit(Resource.Success(musicList))
         }
     }
 }

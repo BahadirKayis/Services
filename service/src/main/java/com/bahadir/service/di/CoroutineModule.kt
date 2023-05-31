@@ -11,7 +11,7 @@ import javax.inject.Named
 
 @Module
 @InstallIn(ServiceComponent::class)
-object CoroutineModule {
+ object CoroutineModule {
     @Provides
     @ServiceScoped
     @Named("MAIN")

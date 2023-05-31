@@ -3,7 +3,7 @@ package com.bahadir.services.ui.selectmusic
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bahadir.core.domain.model.MusicUI
+import com.bahadir.core.data.model.MusicUI
 import com.bahadir.services.databinding.ItemMusicBinding
 
 class MusicAdapter(private val musicList: List<MusicUI>, private val onClick: (Int) -> Unit) :

@@ -9,8 +9,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_music"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/item_music"
+        android:layout_height="match_parent"
+        android:layout="@layout/item_music"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/_8dp"
         android:paddingVertical="@dimen/_16dp"

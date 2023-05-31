@@ -6,50 +6,100 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rc_app_time"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/_16dp"
+    <LinearLayout
+        android:id="@+id/ll_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8dp"
+        android:layout_marginBottom="@dimen/_16dp"
         android:orientation="vertical"
-        android:text="Hello World!"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/btn_background"
+        android:paddingHorizontal="@dimen/_8dp"
+        android:paddingVertical="24dp"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_app_usage_time" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_background"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:cornerRadius="@dimen/_16dp"
+            tools:text="BACKGROUND" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8dp"
+        android:layout_marginBottom="@dimen/_16dp"
+        android:background="@drawable/border_linear"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_8dp"
+        android:paddingVertical="24dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_foreground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_input">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_bound"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:cornerRadius="@dimen/_16dp"
+            tools:text="BOUND" />
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:padding="8dp"
+            android:text="@string/send_message"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_convert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:backgroundTint="@color/blue"
+            android:text="@string/play_sound"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_background"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16dp"
+        android:id="@+id/btn_foreground"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginVertical="@dimen/_8dp"
+        android:layout_marginBottom="@dimen/_16dp"
         android:backgroundTint="@color/red"
-        android:padding="@dimen/_8dp"
-        android:text="@string/start_background_service"
         android:textColor="@color/white"
         android:textSize="17sp"
         app:cornerRadius="@dimen/_16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rc_app_time" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_foreground"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16dp"
-        android:backgroundTint="@color/red"
-        android:padding="@dimen/_8dp"
-        android:text="@string/start_foreground_service"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        app:cornerRadius="@dimen/_16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_background"
-        app:layout_constraintStart_toEndOf="@+id/btn_background"
-        app:layout_constraintTop_toTopOf="@+id/btn_background" />
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout4"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout4"
+        tools:text="FOREGROUND" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

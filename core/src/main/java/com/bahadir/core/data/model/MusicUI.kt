@@ -1,4 +1,4 @@
-package com.bahadir.core.domain.model
+package com.bahadir.core.data.model
 
 import android.net.Uri
 import android.os.Parcelable
