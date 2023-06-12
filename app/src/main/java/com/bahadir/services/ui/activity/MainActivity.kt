@@ -12,11 +12,12 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.bahadir.core.common.ServiceName
 import com.bahadir.core.common.collectIn
 import com.bahadir.core.common.showCustomSnackBar
-import com.bahadir.core.delegation.viewBinding
+import com.bahadir.services.delegation.viewBinding
 import com.bahadir.service.presentation.bound.SoundService
 import com.bahadir.services.databinding.ActivityMainBinding
 import com.bahadir.services.ui.selectmusic.SelectMusicFragment
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -31,14 +32,12 @@ class MainActivity : AppCompatActivity() {
         initUIEffect()
         initUIEvent()
         initUIState()
-
     }
 
 
     private fun initUIEvent() {
         with(binding) {
             btnBackground.setOnClickListener {
-                //setBroadcastReceiver()
                 viewModel.setEvent(ActivityUIEvent.ServiceStatusChanged(ServiceName.BACKGROUND))
             }
             btnForeground.setOnClickListener {
@@ -73,17 +72,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun buttonStateChange(name: ServiceName, text: String) {
         when (name) {
-            ServiceName.BACKGROUND -> "$text BG".also {
-                binding.btnBackground.text = it
-            }
+            ServiceName.BACKGROUND -> binding.btnBackground.text = text
 
-            ServiceName.FOREGROUND -> "$text FG".also {
-                binding.btnForeground.text = it
-            }
+            ServiceName.FOREGROUND -> binding.btnForeground.text = text
 
-            ServiceName.BOUND -> "$text BD".also {
-                binding.btnBound.text = it
-            }
+            ServiceName.BOUND -> binding.btnBound.text = text
         }
     }
 
@@ -147,11 +140,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.setEvent(ActivityUIEvent.ServiceStatusChanged(ServiceName.BOUND))
             unbindService(serviceSound)
         }
-
-
     }
 
     companion object {
         private const val BOTTOM_SHEET_TAG = "SelectMusicFragment"
     }
+
 }

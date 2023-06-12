@@ -16,10 +16,4 @@ class PermissionProviderImpl(private val context: Context) : PermissionProvider 
             )
         }
     }
-
-    override fun accessFineLocation(): Boolean {
-        return context.checkSelfPermission(
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-    }
 }

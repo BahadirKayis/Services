@@ -2,6 +2,7 @@ package com.bahadir.service.presentation.bound
 
 import android.app.Service
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Binder
 import android.os.IBinder
 import com.bahadir.service.domain.provider.SoundControl
@@ -10,6 +11,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SoundService : Service() {
+
     @Inject
     lateinit var soundControl: SoundControl
 
@@ -21,5 +23,10 @@ class SoundService : Service() {
 
     inner class SoundBinder : Binder() {
         fun getService(): SoundService = this@SoundService
+    }
+
+    override fun unbindService(con: ServiceConnection) {
+        super.unbindService(con)
+        soundControl.stopSound()
     }
 }

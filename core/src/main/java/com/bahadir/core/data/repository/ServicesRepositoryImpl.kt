@@ -24,7 +24,6 @@ class ServicesRepositoryImpl(
     override suspend fun setServiceStatus(status: Boolean, name: ServiceName) =
         dataStore.setServiceStatus(status, name)
 
-
     override suspend fun getServiceStatus(name: ServiceName): Boolean =
         dataStore.getServiceStatus(name)
 
@@ -60,7 +59,6 @@ class ServicesRepositoryImpl(
 
                 musicList.add(MusicUI(id, name, artist, duration.formatDuration(), contentUri))
             }
-
             emit(Resource.Success(musicList))
         }
     }

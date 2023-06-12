@@ -52,13 +52,13 @@ dependencies {
     implementation 'androidx.test.espresso:espresso-accessibility:3.5.1'
 
 
-    implementation Firebase.crashlytics
-    implementation Firebase.analytics
-    implementation Hilt.android
-    kapt Hilt.compiler
-    implementation ViewModel.lifecycle
-    implementation Activity.ktx
-    implementation Coroutines.android
-    implementation Splash.splash
+    implementation Firebase.CRASHLYTICS
+    implementation Firebase.ANALYTICS
+    implementation Hilt.ANDROID
+    kapt Hilt.COMPILER
+    implementation ViewModel.LIFECYCLE
+    implementation Activity.KTX
+    implementation Coroutines.ANDROID
+    implementation Splash.SPLASH
 
 }

@@ -1,6 +1,6 @@
 package com.bahadir.services.ui.activity
 
-import com.bahadir.core.base.State
+import com.bahadir.services.base.State
 import com.bahadir.core.common.ServiceName
 
 sealed class ActivityUIState : State {

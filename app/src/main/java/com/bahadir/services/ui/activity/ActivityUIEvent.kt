@@ -1,6 +1,6 @@
 package com.bahadir.services.ui.activity
 
-import com.bahadir.core.base.Event
+import com.bahadir.services.base.Event
 import com.bahadir.core.common.ServiceName
 
 sealed class ActivityUIEvent : Event {

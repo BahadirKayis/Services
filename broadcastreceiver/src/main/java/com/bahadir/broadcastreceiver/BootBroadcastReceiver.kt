@@ -16,7 +16,7 @@ import javax.inject.Named
 @AndroidEntryPoint
 class BootBroadcastReceiver : BroadcastReceiver() {
     @Inject
-    lateinit var repo: GetServiceUseCase
+    lateinit var isServiceWorking: GetServiceUseCase
 
     @Inject
     @Named("IO")
@@ -25,7 +25,7 @@ class BootBroadcastReceiver : BroadcastReceiver() {
         when (intent?.action) {
             ACTION_BOOT_COMPLETED -> {
                 coroutineScope.launch {
-                    if (repo.invoke(ServiceName.BACKGROUND)) {
+                    if (isServiceWorking.invoke(ServiceName.BACKGROUND)) {
                         val serviceIntent = Intent(context, SensorService::class.java)
                         context?.startService(serviceIntent)
                     }

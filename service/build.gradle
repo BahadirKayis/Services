@@ -51,7 +51,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
 
-    implementation Media.media
-    implementation Hilt.android
-    kapt Hilt.compiler
+    implementation Media.MEDIA
+    implementation Hilt.ANDROID
+    kapt Hilt.COMPILER
 }

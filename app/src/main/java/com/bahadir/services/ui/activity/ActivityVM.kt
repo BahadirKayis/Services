@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bahadir.core.common.ServiceName
 import com.bahadir.core.common.collectIn
-import com.bahadir.core.delegation.viewmodel.VMDelegation
-import com.bahadir.core.delegation.viewmodel.VMDelegationImpl
+import com.bahadir.services.delegation.viewmodel.VMDelegation
+import com.bahadir.services.delegation.viewmodel.VMDelegationImpl
 import com.bahadir.core.domain.provider.PermissionProvider
 import com.bahadir.core.domain.provider.ResourceProvider
 import com.bahadir.core.domain.repository.ServicesRepository
@@ -64,7 +64,6 @@ class ActivityVM @Inject constructor(
                 toggleService(name)
                 stateBackgroundService = !stateBackgroundService
                 setServiceStatus(stateBackgroundService, name)
-
             }
 
             ServiceName.FOREGROUND -> {
@@ -77,7 +76,6 @@ class ActivityVM @Inject constructor(
                 toggleService(name)
                 statesBindService = !statesBindService
                 setServiceStatus(statesBindService, name)
-
             }
         }
     }
@@ -110,23 +108,18 @@ class ActivityVM @Inject constructor(
     private fun launchPermission(name: ServiceName) {
         val resultLaunch = when (name) {
             ServiceName.BACKGROUND -> {
-                listOf(
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION
-                )
+                return
             }
 
             ServiceName.FOREGROUND -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     listOf(
                         android.Manifest.permission.READ_MEDIA_AUDIO,
-                        android.Manifest.permission.POST_NOTIFICATIONS
-                    )
 
+                    )
                 } else {
                     listOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 }
-
             }
 
             ServiceName.BOUND -> {
@@ -134,7 +127,6 @@ class ActivityVM @Inject constructor(
             }
         }
         setEffect(ActivityUIEffect.LaunchPermission(resultLaunch))
-
     }
 
     private fun serviceState() {
@@ -142,38 +134,41 @@ class ActivityVM @Inject constructor(
             stateForegroundService = it
             if (it) setState(
                 ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.stop_service), ServiceName.FOREGROUND
+                    resourceProvider.string(R.string.stop_fg), ServiceName.FOREGROUND
                 )
             )
             else setState(
                 ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.start_service), ServiceName.FOREGROUND
+                    resourceProvider.string(R.string.start_fg), ServiceName.FOREGROUND
                 )
             )
         }.launchIn(viewModelScope)
+
         soundService.getServiceStatusFlow(ServiceName.BACKGROUND).onEach {
             stateBackgroundService = it
             if (it) setState(
                 ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.stop_service), ServiceName.BACKGROUND
+                    resourceProvider.string(R.string.stop_bg), ServiceName.BACKGROUND
                 )
             )
             else setState(
                 ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.start_service), ServiceName.BACKGROUND
+                    resourceProvider.string(R.string.start_bg), ServiceName.BACKGROUND
                 )
             )
         }.launchIn(viewModelScope)
+
         soundService.getServiceStatusFlow(ServiceName.BOUND).onEach {
             statesBindService = it
             if (it) setState(
                 ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.stop_service), ServiceName.BOUND
+                    resourceProvider.string(R.string.stop_bound), ServiceName.BOUND
                 )
             )
             else setState(
                 ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.start_service), ServiceName.BOUND
+                    resourceProvider.string(R.string.start_bound),
+                    ServiceName.BOUND
                 )
             )
         }.launchIn(viewModelScope)

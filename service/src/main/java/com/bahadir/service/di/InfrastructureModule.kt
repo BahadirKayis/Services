@@ -1,13 +1,13 @@
 package com.bahadir.service.di
 
 import android.content.Context
-import com.bahadir.service.presentation.background.CustomSensorEventListener
-import com.bahadir.service.infrastructure.MusicControlImpl
-import com.bahadir.service.infrastructure.NotificationControlImpl
-import com.bahadir.service.infrastructure.SoundControlImpl
 import com.bahadir.service.domain.provider.MusicControl
 import com.bahadir.service.domain.provider.NotificationControl
 import com.bahadir.service.domain.provider.SoundControl
+import com.bahadir.service.infrastructure.CustomAccelerometerEventListener
+import com.bahadir.service.infrastructure.MusicControlImpl
+import com.bahadir.service.infrastructure.NotificationControlImpl
+import com.bahadir.service.infrastructure.SoundControlImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,18 +17,17 @@ import dagger.hilt.android.scopes.ServiceScoped
 
 @Module
 @InstallIn(ServiceComponent::class)
- object InfrastructureModule {
+object InfrastructureModule {
 
     @Provides
     @ServiceScoped
     internal fun provideNotificationControl(
-        @ApplicationContext context: Context,
-        notification: NotificationControl
+        @ApplicationContext context: Context, notification: NotificationControl
     ): MusicControl = MusicControlImpl(context, notification)
 
     @Provides
     @ServiceScoped
-     fun provideSoundControl(
+    internal fun provideSoundControl(
         @ApplicationContext context: Context
     ): SoundControl = SoundControlImpl(context)
 
@@ -36,7 +35,8 @@ import dagger.hilt.android.scopes.ServiceScoped
     @ServiceScoped
     fun provideSensorEvent(
         @ApplicationContext context: Context
-    ) = CustomSensorEventListener(context)
+    ) = CustomAccelerometerEventListener(context)
+
 
     @Provides
     @ServiceScoped

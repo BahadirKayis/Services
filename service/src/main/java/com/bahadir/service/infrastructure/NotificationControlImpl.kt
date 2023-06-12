@@ -14,21 +14,19 @@ import androidx.core.app.NotificationCompat
 import com.bahadir.core.data.model.MusicUI
 import com.bahadir.service.R
 import com.bahadir.service.common.NotificationAction
-import com.bahadir.service.presentation.foreground.MusicPlayerService
 import com.bahadir.service.domain.provider.NotificationControl
+import com.bahadir.service.presentation.foreground.MusicPlayerService
 
-internal class NotificationControlImpl (
-    val context: Context
+internal class NotificationControlImpl(
+    val context: Context,
 ) : NotificationControl {
 
     override lateinit var mediaSession: MediaSessionCompat
-
     override fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
-                CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT
+                CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW
             )
-            notificationChannel.description = "This is foreground service channel"
             notificationChannel.lightColor = Color.BLUE
             notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             val manager = context.getSystemService(NotificationManager::class.java)
@@ -42,12 +40,15 @@ internal class NotificationControlImpl (
             .setContentText(song.artist)
             .setSmallIcon(R.drawable.ic_music)
             .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.music))
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setStyle(
                 androidx.media.app.NotificationCompat.MediaStyle()
                     .setMediaSession(mediaSession.sessionToken)
+
+
             )
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC).addAction(
+            .addAction(
                 R.drawable.ic_skip_previous,
                 NotificationAction.PREVIOUS.name,
                 pendingIntent(action = NotificationAction.PREVIOUS)
@@ -66,8 +67,8 @@ internal class NotificationControlImpl (
                 NotificationAction.EXIT.name,
                 pendingIntent(action = NotificationAction.EXIT)
             )
-            .setOnlyAlertOnce(true)
-            .setOngoing(false)
+            .setOnlyAlertOnce(false)
+            .setOngoing(true)
             .build()
 
 

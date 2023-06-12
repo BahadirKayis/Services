@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Services</string>
-    <string name="start_service">Start</string>
-    <string name="stop_service">Stop</string>
     <string name="accessibility_service_description">You need to grant this permission for the application to function correctly.</string>
     <string name="app_icon">App Icon</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -10,5 +8,12 @@
     <string name="play_sound">Play Sound</string>
     <string name="stop_sound">Stop Sound</string>
     <string name="foreground_stop_error">turn off the service from the notification place above</string>
+
+    <string name="start_bg">Start Background Service</string>
+    <string name="stop_bg">Stop Background Service</string>
+    <string name="start_fg">Start Foreground Service</string>
+    <string name="stop_fg">Stop Foreground Service</string>
+    <string name="start_bound">Start Bound Service</string>
+    <string name="stop_bound">Stop Bound Service</string>
 
 </resources>

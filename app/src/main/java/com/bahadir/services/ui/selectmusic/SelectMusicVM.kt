@@ -20,7 +20,6 @@ class SelectMusicVM @Inject constructor(
     private val setGetService: SetServiceUseCase,
 ) : ViewModel() {
     val songList: MutableStateFlow<List<MusicUI>> = MutableStateFlow(listOf())
-
     init {
         getMusic().onEach {
             when (it) {

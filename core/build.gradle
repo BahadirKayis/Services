@@ -47,12 +47,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
 
-    implementation ViewModel.lifecycle
-    implementation Activity.ktx
-    implementation Coroutines.android
-    implementation Hilt.android
-    kapt Hilt.compiler
-    implementation DataStore.preferences
-    testImplementation Truth.truth
+    implementation ViewModel.LIFECYCLE
+    implementation Activity.KTX
+    implementation Coroutines.ANDROID
+    implementation Hilt.ANDROID
+    kapt Hilt.COMPILER
+    implementation DataStore.PREFERENCES
+    testImplementation Truth.TRUTH
 
 }

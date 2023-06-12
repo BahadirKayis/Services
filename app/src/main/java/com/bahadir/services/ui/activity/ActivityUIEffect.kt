@@ -1,6 +1,6 @@
 package com.bahadir.services.ui.activity
 
-import com.bahadir.core.base.Effect
+import com.bahadir.services.base.Effect
 
 sealed class ActivityUIEffect : Effect {
     data class StartService<T>(val intent: Class<T>) : ActivityUIEffect()
