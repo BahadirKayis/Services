@@ -6,15 +6,16 @@ It teaches how to use different types of services in conjunction with multi-modu
 
 <p align="center">
  <a href="https://medium.com/p/584e1311b61c/edit"><img alt="Medium" src="https://img.shields.io/badge/Medium-Services-black.svg"/></a>
-  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-red.svg"/></a>
-  <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat"/></a>
-  <a href="https://github.com/BahadirKayis"><img alt="Profile" src="https://img.shields.io/badge/GitHub-BahadirKayis-darkblue"/></a> 
+ <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-red.svg"/></a>
+ <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat"/></a>
+ <a href="https://github.com/BahadirKayis"><img alt="Profile" src="https://img.shields.io/badge/GitHub-BahadirKayis-darkblue"/></a> 
 </p>
 
-## Screenshots
-<p align="center">
-<img src="/previews/app_screen.png" width="20%"/>
-</p>
+## Video
+https://github.com/BahadirKayis/Services/assets/66027016/851b359f-7d0f-4c1d-9bf6-f088a368b420
+
+
+
 
 ## Tech stack & Open-source libraries
 - Minimum SDK level 24
