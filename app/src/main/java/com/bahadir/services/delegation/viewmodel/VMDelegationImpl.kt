@@ -5,14 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.bahadir.services.base.Effect
 import com.bahadir.services.base.Event
 import com.bahadir.services.base.State
-
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
-class VMDelegationImpl<EFFECT : com.bahadir.services.base.Effect, EVENT : com.bahadir.services.base.Event, STATE : com.bahadir.services.base.State>(
+class VMDelegationImpl<EFFECT : Effect, EVENT : Event, STATE : State>(
     setInitialState: STATE
 ) : VMDelegation<EFFECT, EVENT, STATE> {
     private lateinit var viewModel: ViewModel
@@ -31,6 +30,8 @@ class VMDelegationImpl<EFFECT : com.bahadir.services.base.Effect, EVENT : com.ba
     override fun viewModel(viewModel: ViewModel) {
         this.viewModel = viewModel
     }
+
+    override fun getCurrentState(): STATE = _stateTemp.value
 
     override fun setState(state: STATE) {
         viewModel.viewModelScope.launch {

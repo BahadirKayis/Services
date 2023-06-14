@@ -26,11 +26,6 @@ class SensorService : Service() {
         return null
     }
 
-    override fun onCreate() {
-        super.onCreate()
-
-    }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)

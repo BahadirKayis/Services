@@ -2,7 +2,6 @@ package com.bahadir.service.infrastructure
 
 import android.app.Notification
 import android.content.Context
-import android.media.AudioManager
 import android.media.MediaPlayer
 import android.support.v4.media.session.MediaSessionCompat
 import com.bahadir.core.data.model.MusicUI
@@ -23,6 +22,7 @@ internal class MusicControlImpl(
     init {
         notification.createNotificationChannel()
         notification.mediaSession = MediaSessionCompat(context, TAG_MEDIA_SESSION)
+
     }
 
     override fun startSong(): Notification {
@@ -65,30 +65,6 @@ internal class MusicControlImpl(
         return notification.showNotification(newState, songList[songPosition])
     }
 
-    override fun audioFocusChange() {
-        val audioFocusChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
-            when (focusChange) {
-                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-                    // Other app has taken audio focus
-                    mediaPlayer.pause()
-                }
-
-                AudioManager.AUDIOFOCUS_GAIN -> {
-                    // Your app has been granted audio focus again
-                    mediaPlayer.start()
-                }
-
-                AudioManager.AUDIOFOCUS_LOSS -> {
-                    // Permanent loss of audio focus
-                    mediaPlayer.stop()
-                }
-            }
-        }
-        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audioManager.requestAudioFocus(
-            audioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN
-        )
-    }
 
     override fun stopNotification() {
         mediaPlayer.stop()

@@ -14,9 +14,8 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Singleton
 
-@Singleton
+
 class ServicesRepositoryImpl(
     private val dataStore: DataStoreDataSource,
     private val context: Context
@@ -39,8 +38,12 @@ class ServicesRepositoryImpl(
             MediaStore.Audio.Media.DISPLAY_NAME,
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.DURATION,
+            MediaStore.Audio.Media.MIME_TYPE
         )
-        val cursor = context.contentResolver.query(uri, projection, null, null, null)
+        val selection = "${MediaStore.Audio.Media.MIME_TYPE}=?"
+        //Sadece mp3 dosyalarını almak için MIME_TYPE'ı "audio/mpeg" olanları seçiyoruz.
+        val selectionArgs = arrayOf("audio/mpeg")
+        val cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
 
         cursor?.use { useCursor ->
             val idColumn = useCursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)

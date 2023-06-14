@@ -28,7 +28,8 @@
             android:textColor="@color/white"
             android:textSize="17sp"
             app:cornerRadius="@dimen/_16dp"
-            tools:text="BACKGROUND" />
+            android:text="@string/start_bg"
+             />
 
     </LinearLayout>
 
@@ -54,8 +55,9 @@
             android:backgroundTint="@color/red"
             android:textColor="@color/white"
             android:textSize="17sp"
+            android:text="@string/start_bound"
             app:cornerRadius="@dimen/_16dp"
-            tools:text="BOUND" />
+             />
 
         <EditText
             android:id="@+id/et_input"
@@ -74,7 +76,7 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/btn_convert"
+            android:id="@+id/btn_sound"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
@@ -95,11 +97,12 @@
         android:backgroundTint="@color/red"
         android:textColor="@color/white"
         android:textSize="17sp"
+        android:text="@string/start_fg"
         app:cornerRadius="@dimen/_16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
         app:layout_constraintStart_toStartOf="@+id/linearLayout4"
         app:layout_constraintTop_toBottomOf="@id/linearLayout4"
-        tools:text="FOREGROUND" />
+       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,5 @@ internal interface MusicControl {
     fun startSong(): Notification
     fun changeSong(changeSong: Int): Notification
     fun musicStateUpdate(state: NotificationAction): Notification
-    fun audioFocusChange()
     fun stopNotification()
 }

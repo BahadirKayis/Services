@@ -20,12 +20,12 @@ class CustomAccelerometerEventListener(private val context: Context) :
 
         if (z > HORIZONTAL) {
             turnOnScreen = true
-            Log.e("CustomSensorEventListener", "Ekran Kapandı")
+            Log.i("CustomSensorEventListener", "Ekran Kapandı")
         }
         if (isVerticalOrientation(y, z) && turnOnScreen) {
 
             //Cihaz yatay moddan dikey moda geçiyor ise ekranı aç
-            Log.e("CustomSensorEventListener", "Ekran Açıldı")
+            Log.i("CustomSensorEventListener", "Ekran Açıldı")
             turnOnScreen = false
             turnOnScreen()
         }

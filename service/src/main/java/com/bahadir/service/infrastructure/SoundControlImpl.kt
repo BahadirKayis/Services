@@ -12,7 +12,6 @@ class SoundControlImpl(val context: Context) : SoundControl {
         mediaPlayer.prepare()
     }
 
-
     override fun playSound() {
         mediaPlayer.start()
     }

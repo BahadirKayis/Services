@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!-- Background Service-->
-    <!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!--Foreground Service-->
@@ -44,7 +43,6 @@
         <service
             android:name="com.bahadir.service.presentation.foreground.MusicPlayerService"
             android:foregroundServiceType="mediaPlayback" />
-        <service android:name="com.bahadir.service.presentation.bound.MessengerService" />
         <service android:name="com.bahadir.service.presentation.bound.SoundService" />
     </application>
 </manifest>

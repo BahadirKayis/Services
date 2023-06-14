@@ -5,15 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bahadir.core.common.ServiceName
 import com.bahadir.core.common.collectIn
-import com.bahadir.services.delegation.viewmodel.VMDelegation
-import com.bahadir.services.delegation.viewmodel.VMDelegationImpl
 import com.bahadir.core.domain.provider.PermissionProvider
 import com.bahadir.core.domain.provider.ResourceProvider
-import com.bahadir.core.domain.repository.ServicesRepository
+import com.bahadir.core.domain.usecase.GetServiceUseCase
 import com.bahadir.core.domain.usecase.SetServiceUseCase
 import com.bahadir.service.presentation.background.SensorService
 import com.bahadir.service.presentation.bound.SoundService
 import com.bahadir.services.R
+import com.bahadir.services.delegation.viewmodel.VMDelegation
+import com.bahadir.services.delegation.viewmodel.VMDelegationImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,14 +25,14 @@ class ActivityVM @Inject constructor(
     private val setServiceStatusUseCase: SetServiceUseCase,
     private val permission: PermissionProvider,
     private val resourceProvider: ResourceProvider,
-    private val soundService: ServicesRepository
+    private val soundService: GetServiceUseCase
 ) : ViewModel(),
-    VMDelegation<ActivityUIEffect, ActivityUIEvent, ActivityUIState> by VMDelegationImpl(
-        ActivityUIState.LoadingState()
-    ) {
+    VMDelegation<ActivityUIEffect, ActivityUIEvent, ActivityUIState> by
+    VMDelegationImpl(ActivityUIState()) {
+
     private var stateBackgroundService = false
     private var stateForegroundService = false
-    private var statesBindService = false
+    private var stateBoundService = false
 
     init {
         viewModel(this)
@@ -42,28 +42,23 @@ class ActivityVM @Inject constructor(
                     serviceStatusChanged(event.name)
                 }
 
-                is ActivityUIEvent.SendMessage -> {
-                    //sendMessage(event.text)
-                }
-
                 is ActivityUIEvent.BindToggleSound -> {
                     val text = if (event.isPlaying) resourceProvider.string(R.string.play_sound)
                     else resourceProvider.string(R.string.stop_sound)
 
-                    setState(ActivityUIState.SoundState(text))
+                    setState(getCurrentState().copy(soundState = text))
                     setEffect(ActivityUIEffect.BoundToggleSound)
                 }
             }
         }
-        serviceState()
+        getServiceState()
     }
 
     private fun serviceStatusChanged(name: ServiceName) {
         when (name) {
             ServiceName.BACKGROUND -> {
                 toggleService(name)
-                stateBackgroundService = !stateBackgroundService
-                setServiceStatus(stateBackgroundService, name)
+
             }
 
             ServiceName.FOREGROUND -> {
@@ -73,9 +68,9 @@ class ActivityVM @Inject constructor(
             }
 
             ServiceName.BOUND -> {
-                toggleService(name)
-                statesBindService = !statesBindService
-                setServiceStatus(statesBindService, name)
+                if (permission.checkReadStorage()) {
+                    toggleService(name)
+                } else launchPermission(name)
             }
         }
     }
@@ -83,17 +78,23 @@ class ActivityVM @Inject constructor(
     private fun toggleService(name: ServiceName) {
         val effect = when (name) {
             ServiceName.BACKGROUND -> {
+                setServiceStatus(!stateBackgroundService, name)
                 if (!stateBackgroundService) ActivityUIEffect.StartService(SensorService::class.java)
                 else ActivityUIEffect.StopService(SensorService::class.java)
             }
 
             ServiceName.FOREGROUND -> {
-                if (!stateForegroundService) ActivityUIEffect.ActionSelectMusic
-                else ActivityUIEffect.ShowError(resourceProvider.string(R.string.foreground_stop_error))
+                if (!stateForegroundService)
+                //Servisi BottomSheetFragment içerisinde başlatıyorum
+                    ActivityUIEffect.ActionSelectMusic
+                else
+                    ActivityUIEffect.ShowError(resourceProvider.string(R.string.foreground_stop_error))
+
             }
 
             ServiceName.BOUND -> {
-                if (!statesBindService) ActivityUIEffect.StartService(SoundService::class.java)
+                setServiceStatus(!stateBoundService, name)
+                if (!stateBoundService) ActivityUIEffect.StartService(SoundService::class.java)
                 else ActivityUIEffect.StopService(SoundService::class.java)
             }
         }
@@ -116,99 +117,62 @@ class ActivityVM @Inject constructor(
                     listOf(
                         android.Manifest.permission.READ_MEDIA_AUDIO,
 
-                    )
+                        )
                 } else {
                     listOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 }
             }
 
             ServiceName.BOUND -> {
-                return
+                //Cihazda bulunan şarkıyı başlattığım için izin istemem gerekiyor
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    listOf(
+                        android.Manifest.permission.READ_MEDIA_AUDIO,
+
+                        )
+                } else {
+                    listOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
             }
         }
         setEffect(ActivityUIEffect.LaunchPermission(resultLaunch))
     }
 
-    private fun serviceState() {
-        soundService.getServiceStatusFlow(ServiceName.FOREGROUND).onEach {
-            stateForegroundService = it
-            if (it) setState(
-                ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.stop_fg), ServiceName.FOREGROUND
-                )
-            )
-            else setState(
-                ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.start_fg), ServiceName.FOREGROUND
-                )
-            )
-        }.launchIn(viewModelScope)
-
-        soundService.getServiceStatusFlow(ServiceName.BACKGROUND).onEach {
+    private fun getServiceState() {
+        soundService[ServiceName.BACKGROUND].onEach {
             stateBackgroundService = it
-            if (it) setState(
-                ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.stop_bg), ServiceName.BACKGROUND
-                )
-            )
-            else setState(
-                ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.start_bg), ServiceName.BACKGROUND
+            val serviceStateText = if (it) resourceProvider.string(R.string.stop_bg)
+            else resourceProvider.string(R.string.start_bg)
+            setState(
+                getCurrentState().copy(
+                    serviceState = serviceStateText,
+                    serviceName = ServiceName.BACKGROUND
                 )
             )
         }.launchIn(viewModelScope)
 
-        soundService.getServiceStatusFlow(ServiceName.BOUND).onEach {
-            statesBindService = it
-            if (it) setState(
-                ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.stop_bound), ServiceName.BOUND
+        soundService[ServiceName.BOUND].onEach {
+            stateBoundService = it
+            val serviceStateText = if (it) resourceProvider.string(R.string.stop_bound)
+            else resourceProvider.string(R.string.start_bound)
+            setState(
+                getCurrentState().copy(
+                    serviceState = serviceStateText,
+                    serviceName = ServiceName.BOUND
                 )
             )
-            else setState(
-                ActivityUIState.ServiceState(
-                    resourceProvider.string(R.string.start_bound),
-                    ServiceName.BOUND
+        }.launchIn(viewModelScope)
+
+        soundService[ServiceName.FOREGROUND].onEach {
+            stateForegroundService = it
+            val serviceStateText = if (it) resourceProvider.string(R.string.stop_fg)
+            else resourceProvider.string(R.string.start_fg)
+            setState(
+                getCurrentState().copy(
+                    serviceState = serviceStateText,
+                    serviceName = ServiceName.FOREGROUND
                 )
             )
         }.launchIn(viewModelScope)
     }
-
-//
-//    //Messenger nesnesini kullanarak Activity ve Service arasında iletişim kurulur.
-//    var messengerService: Messenger? = null
-//
-//    private fun sendMessage(text: String) {
-//        messengerService?.let {
-//            val msg = Message.obtain(null, MSG_BOUND_TEXT, 0, 0)
-//            msg.obj = text
-//            try {
-//                it.send(msg)
-//            } catch (e: RemoteException) {
-//                e.printStackTrace()
-//            }
-//        }
-//
-//    }
-//
-//    // Bağlantı servis ile sağlandığında, bizimle iletişim kurmak için
-//    // kullanabileceğimiz bir nesne elde ederiz. Servis ile bir Messenger
-//    // aracılığıyla iletişim kuruyoruz, bu yüzden burada raw IBinder
-//    // nesnesinden istemcinin tarafını temsil eden bir Messenger alırız.
-//
-//    val mConnection = object : ServiceConnection {
-//        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-//            messengerService = Messenger(service)
-//        }
-//
-//        override fun onServiceDisconnected(name: ComponentName?) {
-//            messengerService = null
-//        }
-//    }
-//
-//
-//    companion object {
-//        const val MSG_BOUND_TEXT = 1
-//    }
-//
 }

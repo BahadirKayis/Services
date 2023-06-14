@@ -4,12 +4,17 @@ import android.app.Notification
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.bahadir.core.common.ServiceName
 import com.bahadir.core.common.parcelableList
 import com.bahadir.core.data.model.IntentServiceMusicList
+import com.bahadir.core.domain.usecase.SetServiceUseCase
 import com.bahadir.service.common.NotificationAction
 import com.bahadir.service.domain.provider.MusicControl
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 
 @AndroidEntryPoint
@@ -17,6 +22,13 @@ class MusicPlayerService : Service() {
 
     @Inject
     internal lateinit var musicControl: MusicControl
+
+    @Inject
+    lateinit var setServiceStatus: SetServiceUseCase
+
+    @Inject
+    @Named("IO")
+    lateinit var coroutineScope: CoroutineScope
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -59,7 +71,10 @@ class MusicPlayerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         musicControl.stopNotification()
-        stopSelf()
+        coroutineScope.launch {
+            setServiceStatus(false, ServiceName.FOREGROUND)
+        }
+
     }
 
     companion object {

@@ -12,9 +12,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.bahadir.core.common.ServiceName
 import com.bahadir.core.common.collectIn
 import com.bahadir.core.common.showCustomSnackBar
-import com.bahadir.services.delegation.viewBinding
 import com.bahadir.service.presentation.bound.SoundService
 import com.bahadir.services.databinding.ActivityMainBinding
+import com.bahadir.services.delegation.viewBinding
 import com.bahadir.services.ui.selectmusic.SelectMusicFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,11 +43,10 @@ class MainActivity : AppCompatActivity() {
             btnForeground.setOnClickListener {
                 viewModel.setEvent(ActivityUIEvent.ServiceStatusChanged(ServiceName.FOREGROUND))
             }
-            btnConvert.setOnClickListener {
+            btnSound.setOnClickListener {
                 soundService?.let {
                     viewModel.setEvent(ActivityUIEvent.BindToggleSound(it.soundControl.isPlaying()))
                 }
-                // viewModel.setEvent(ActivityUIEvent.SendMessage(binding.etInput.text.toString()))
             }
             btnBound.setOnClickListener {
                 viewModel.setEvent(ActivityUIEvent.ServiceStatusChanged(ServiceName.BOUND))
@@ -56,17 +55,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUIState() = viewModel.state.collectIn(this) { state ->
-        when (state) {
-            is ActivityUIState.ServiceState -> {
-                buttonStateChange(state.name, state.serviceState)
-
-            }
-
-            is ActivityUIState.SoundState -> {
-                binding.btnConvert.text = state.sound
-            }
-
-            else -> {}
+        state.serviceName?.let {
+            buttonStateChange(it, state.serviceState!!)
+        }
+        state.soundState?.let {
+            binding.btnSound.text = it
         }
     }
 
@@ -126,11 +119,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val permissionForResult =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { isGranted ->
-//            if (isGranted.) {
-//                viewModel.setEvent(ActivityUIEvent.ActionSelectMusic)
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { _ ->
+            // İzinlerin sonuçları alındığında yapılacak işlemler
+            // permissions parametresi, izinlerin durumunu içeren bir Map  nesnesidir.
+
+            // İzinlerin durumunu kontrol etmek için
+//            if (isGranted[Manifest.permission.READ_EXTERNAL_STORAGE] == true) {
+//                // İzin verildiyse yapılacak işlemler
+//
 //            } else {
-//                viewModel.setEffect(ActivityUIEffect.ShowError("Permission not granted"))
+//                // İzin reddedildiyse yapılacak işlemler
+//
 //            }
         }
 
@@ -145,5 +144,4 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val BOTTOM_SHEET_TAG = "SelectMusicFragment"
     }
-
 }
