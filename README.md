@@ -14,8 +14,12 @@ It teaches how to use different types of services in conjunction with multi-modu
 ## Video
 https://github.com/BahadirKayis/Services/assets/66027016/851b359f-7d0f-4c1d-9bf6-f088a368b420
 
-
-
+## Permission
+<pre>
+&lt;uses-permission android:name="android.permission.FOREGROUND_SERVICE" /&gt;
+&lt;uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" /&gt;  SDK <=32
+&lt;uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /&gt;  SDK =>33
+</pre>
 
 ## Tech stack & Open-source libraries
 - Minimum SDK level 24
