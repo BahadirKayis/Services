@@ -36,7 +36,10 @@ https://github.com/BahadirKayis/Services/assets/66027016/db982aad-51ba-4f99-8185
   - [DataStore](https://developer.android.com/jetpack/androidx/releases/datastore) - It is an important component used to manage data and facilitate data storage operations.
 - [Dependency Injection](https://developer.android.com/training/dependency-injection) - Is a design pattern that facilitates the management of dependencies and the integration of components in a flexible, testable, and maintainable manner
 - [Android Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Dependency Injection Library
-
+- [Broadcasts](https://developer.android.com/guide/components/broadcasts) - It enables receiving information by subscribing to desired broadcasts in the Android system. Here, I used Dynamic Broadcast Receiver to subscribe to the channels "ACTION_SCREEN_OFF" and "ACTION_SCREEN_ON," which indicate events related to the device's screen state, allowing me to listen
+- [Sensor Manager](https://developer.android.com/guide/topics/sensors/sensors_overview) - They are components that measure motion, orientation, and environmental conditions, providing raw data with high precision and accuracy.
+- [Notification](https://developer.android.com/develop/ui/views/notifications) - is a system feature that allows displaying informative messages, alerts, or updates to users.
+- [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics?hl=tr) - is a error tracking and reporting tool used to monitor, report, and analyze crashes and errors in your application.
 ## Dependency graph
 <p align="center">
 <img src="/previews/dependency.png" width="80%" height="500px"/>
