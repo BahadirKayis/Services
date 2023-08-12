@@ -5,7 +5,7 @@ It teaches how to use different types of services in conjunction with multi-modu
 </br>
 
 <p align="center">
- <a href="https://medium.com/p/584e1311b61c/edit"><img alt="Medium" src="https://img.shields.io/badge/Medium-Services-black.svg"/></a>
+ <a href="https://medium.com/@bahadir.kayis24/android-service-584e1311b61c"><img alt="Medium" src="https://img.shields.io/badge/Medium-Services-black.svg"/></a>
  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-red.svg"/></a>
  <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat"/></a>
  <a href="https://github.com/BahadirKayis"><img alt="Profile" src="https://img.shields.io/badge/GitHub-BahadirKayis-darkblue"/></a> 
